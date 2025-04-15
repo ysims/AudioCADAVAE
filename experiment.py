@@ -10,11 +10,6 @@ import random
 import torch
 import math
 
-# random.seed(0)
-# np.random.seed(0)
-# torch.manual_seed(0)
-
-
 def str2bool(v):
     if v.lower() in ("yes", "true", "t", "y", "1"):
         return True
@@ -68,7 +63,6 @@ hyperparameters = {
                 "end_epoch": 75,
                 "start_epoch": 21,
             },
-            # "distance": {"factor": 8.13, "end_epoch": 22, "start_epoch": 6},
             "distance": {"factor": 5.13, "end_epoch": 22, "start_epoch": 6},
             "M": 1,
         },
@@ -96,57 +90,8 @@ hyperparameters = {
 # as determined on the validation spit
 
 cls_train_steps = [
-    # {"dataset": "ESC-50", "num_shots": 0, "generalized": True, "cls_train_steps": 21},
     {"dataset": "ESC-50", "num_shots": 0, "generalized": False, "cls_train_steps": 23},
     {"dataset": "FSC22", "num_shots": 0, "generalized": False, "cls_train_steps": 20},
-    # {"dataset": "ESC-50", "num_shots": 1, "generalized": True, "cls_train_steps": 22},
-    # {"dataset": "ESC-50", "num_shots": 1, "generalized": False, "cls_train_steps": 18},
-    # {"dataset": "ESC-50", "num_shots": 5, "generalized": True, "cls_train_steps": 29},
-    # {"dataset": "ESC-50", "num_shots": 5, "generalized": False, "cls_train_steps": 18},
-    # {"dataset": "ESC-50", "num_shots": 2, "generalized": True, "cls_train_steps": 29},
-    # {"dataset": "ESC-50", "num_shots": 2, "generalized": False, "cls_train_steps": 18},
-    # {"dataset": "ESC-50", "num_shots": 10, "generalized": True, "cls_train_steps": 18},
-    # {"dataset": "ESC-50", "num_shots": 10, "generalized": False, "cls_train_steps": 18},
-    # {"dataset": "SUN", "num_shots": 0, "generalized": True, "cls_train_steps": 21},
-    # {"dataset": "SUN", "num_shots": 0, "generalized": False, "cls_train_steps": 30},
-    # {"dataset": "SUN", "num_shots": 1, "generalized": True, "cls_train_steps": 22},
-    # {"dataset": "SUN", "num_shots": 1, "generalized": False, "cls_train_steps": 96},
-    # {"dataset": "SUN", "num_shots": 5, "generalized": True, "cls_train_steps": 29},
-    # {"dataset": "SUN", "num_shots": 5, "generalized": False, "cls_train_steps": 78},
-    # {"dataset": "SUN", "num_shots": 2, "generalized": True, "cls_train_steps": 29},
-    # {"dataset": "SUN", "num_shots": 2, "generalized": False, "cls_train_steps": 61},
-    # {"dataset": "SUN", "num_shots": 10, "generalized": True, "cls_train_steps": 79},
-    # {"dataset": "SUN", "num_shots": 10, "generalized": False, "cls_train_steps": 94},
-    # {"dataset": "AWA1", "num_shots": 0, "generalized": True, "cls_train_steps": 33},
-    # {"dataset": "AWA1", "num_shots": 0, "generalized": False, "cls_train_steps": 25},
-    # {"dataset": "AWA1", "num_shots": 1, "generalized": True, "cls_train_steps": 40},
-    # {"dataset": "AWA1", "num_shots": 1, "generalized": False, "cls_train_steps": 81},
-    # {"dataset": "AWA1", "num_shots": 5, "generalized": True, "cls_train_steps": 89},
-    # {"dataset": "AWA1", "num_shots": 5, "generalized": False, "cls_train_steps": 62},
-    # {"dataset": "AWA1", "num_shots": 2, "generalized": True, "cls_train_steps": 56},
-    # {"dataset": "AWA1", "num_shots": 2, "generalized": False, "cls_train_steps": 59},
-    # {"dataset": "AWA1", "num_shots": 10, "generalized": True, "cls_train_steps": 100},
-    # {"dataset": "AWA1", "num_shots": 10, "generalized": False, "cls_train_steps": 50},
-    # {"dataset": "CUB", "num_shots": 0, "generalized": True, "cls_train_steps": 23},
-    # {"dataset": "CUB", "num_shots": 0, "generalized": False, "cls_train_steps": 22},
-    # {"dataset": "CUB", "num_shots": 1, "generalized": True, "cls_train_steps": 34},
-    # {"dataset": "CUB", "num_shots": 1, "generalized": False, "cls_train_steps": 46},
-    # {"dataset": "CUB", "num_shots": 5, "generalized": True, "cls_train_steps": 64},
-    # {"dataset": "CUB", "num_shots": 5, "generalized": False, "cls_train_steps": 73},
-    # {"dataset": "CUB", "num_shots": 2, "generalized": True, "cls_train_steps": 39},
-    # {"dataset": "CUB", "num_shots": 2, "generalized": False, "cls_train_steps": 31},
-    # {"dataset": "CUB", "num_shots": 10, "generalized": True, "cls_train_steps": 85},
-    # {"dataset": "CUB", "num_shots": 10, "generalized": False, "cls_train_steps": 67},
-    # {"dataset": "AWA2", "num_shots": 0, "generalized": True, "cls_train_steps": 29},
-    # {"dataset": "AWA2", "num_shots": 0, "generalized": False, "cls_train_steps": 39},
-    # {"dataset": "AWA2", "num_shots": 1, "generalized": True, "cls_train_steps": 44},
-    # {"dataset": "AWA2", "num_shots": 1, "generalized": False, "cls_train_steps": 96},
-    # {"dataset": "AWA2", "num_shots": 5, "generalized": True, "cls_train_steps": 99},
-    # {"dataset": "AWA2", "num_shots": 5, "generalized": False, "cls_train_steps": 100},
-    # {"dataset": "AWA2", "num_shots": 2, "generalized": True, "cls_train_steps": 69},
-    # {"dataset": "AWA2", "num_shots": 2, "generalized": False, "cls_train_steps": 79},
-    # {"dataset": "AWA2", "num_shots": 10, "generalized": True, "cls_train_steps": 86},
-    # {"dataset": "AWA2", "num_shots": 10, "generalized": False, "cls_train_steps": 78},
 ]
 
 ##################################
@@ -175,46 +120,22 @@ print(hyperparameters["cls_train_steps"])
 if hyperparameters["generalized"]:
     if hyperparameters["num_shots"] == 0:
         hyperparameters["samples_per_class"] = {
-            "CUB": (200, 0, 400, 0),
-            "SUN": (200, 0, 400, 0),
-            "APY": (200, 0, 400, 0),
-            "AWA1": (200, 0, 400, 0),
-            "AWA2": (200, 0, 400, 0),
-            "FLO": (200, 0, 400, 0),
             "ESC-50": (100, 0, 200, 0),
             "FSC22": (100, 0, 200, 0),
         }
     else:
         hyperparameters["samples_per_class"] = {
-            "CUB": (200, 0, 200, 200),
-            "SUN": (200, 0, 200, 200),
-            "APY": (200, 0, 200, 200),
-            "AWA1": (200, 0, 200, 200),
-            "AWA2": (200, 0, 200, 200),
-            "FLO": (200, 0, 200, 200),
             "ESC-50": (100, 0, 100, 100),
             "FSC22": (100, 0, 100, 100),
         }
 else:
     if hyperparameters["num_shots"] == 0:
         hyperparameters["samples_per_class"] = {
-            "CUB": (0, 0, 200, 0),
-            "SUN": (0, 0, 200, 0),
-            "APY": (0, 0, 200, 0),
-            "AWA1": (0, 0, 200, 0),
-            "AWA2": (0, 0, 200, 0),
-            "FLO": (0, 0, 200, 0),
             "ESC-50": (0, 0, 100, 0),
             "FSC22": (0, 0, 100, 0),
         }
     else:
         hyperparameters["samples_per_class"] = {
-            "CUB": (0, 0, 200, 200),
-            "SUN": (0, 0, 200, 200),
-            "APY": (0, 0, 200, 200),
-            "AWA1": (0, 0, 200, 200),
-            "AWA2": (0, 0, 200, 200),
-            "FLO": (0, 0, 200, 200),
             "ESC-50": (0, 0, 100, 100),
             "FSC22": (0, 0, 100, 100),
         }
@@ -232,8 +153,7 @@ for d in model.all_data_sources_without_duplicates:
 ########################################
 """
 
-# seeds = [123]
-# seeds = [123, 16, 26, 149, 1995]  # <- Train several times randomly
+# Train several times randomly
 seeds = random.sample(range(1000), 10)
 n_trials = len(seeds)
 accuracies = []

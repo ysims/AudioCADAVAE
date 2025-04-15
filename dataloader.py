@@ -1,14 +1,8 @@
 import numpy as np
-import scipy.io as sio
 import torch
-from sklearn import preprocessing
-import sys
-import os
-from pathlib import Path
 import pickle
 import random
 import copy
-import re
 
 
 def map_label(label, classes):
@@ -113,15 +107,7 @@ class DATA_LOADER(object):
                     train_auxiliary.append(all_auxiliary[i])
 
         unique_val_labels = list(set(val_labels))
-        # for i in range(len(val_labels)):
-        #     val_labels[i] = unique_val_labels.index(val_labels[i])
-
         unique_train_labels = list(set(train_labels))
-        # for i in range(len(train_labels)):
-        #     train_labels[i] = unique_train_labels.index(train_labels[i])        
-
-        # print(val_labels)
-        
 
         # Create a dictionary to map unique val labels to their corresponding auxiliary vectors
         val_auxiliary_dict = {label: val_auxiliary[val_labels.index(label)] for label in unique_val_labels}
@@ -303,7 +289,6 @@ class DATA_LOADER(object):
         print("new_test_unseen.size(): ", new_test_unseen.size())
         print("new_test_unseen_label.size(): ", new_test_unseen_label.size())
         print("new_train_unseen.size(): ", new_train_unseen.size())
-        # print('new_train_unseen_att.size(): ', new_train_unseen_att.size())
         print("new_train_unseen_label.size(): ", new_train_unseen_label.size())
         print(">> num novel classes: " + str(len(self.novelclasses)))
 
@@ -312,11 +297,8 @@ class DATA_LOADER(object):
         #######
 
         self.data["test_unseen"]["audio_features"] = copy.deepcopy(new_test_unseen)
-        # self.data['train_seen']['audio_features']  = copy.deepcopy(new_train_seen)
-
         self.data["test_unseen"]["labels"] = copy.deepcopy(new_test_unseen_label)
-        # self.data['train_seen']['labels']  = copy.deepcopy(new_train_seen_label)
-
+        
         self.data["train_unseen"]["audio_features"] = copy.deepcopy(new_train_unseen)
         self.data["train_unseen"]["labels"] = copy.deepcopy(new_train_unseen_label)
         self.ntrain_unseen = self.data["train_unseen"]["audio_features"].size(0)

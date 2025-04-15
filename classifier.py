@@ -1,14 +1,7 @@
 import torch
-import torch.nn as nn
 from torch.autograd import Variable
 import torch.optim as optim
-import numpy as np
-from sklearn.preprocessing import MinMaxScaler
-import copy
-from torch.nn import functional as F
-import sys
 from torch.utils.data import Dataset, DataLoader
-import numpy as np
 
 
 def map_label(label, classes):
@@ -224,7 +217,6 @@ class CLASSIFIER:
                 loss = self.criterion(output, batch["y"])
 
                 loss.backward()
-                # print(loss)
 
                 if i > 0.8 * iterations_per_epoch:
 

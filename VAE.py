@@ -221,9 +221,6 @@ class VariationalAutoencoder(nn.Module):
         f2 = (float(current_epoch_mod - b_start) / float(b_end - b_start)) * b_factor
         beta = torch.cuda.FloatTensor([min(max(f2, 0), b_factor)])
 
-        # if (beta == 0):
-        #     print("Beta is zero, epoch is:", current_epoch)
-
         # Calculate distance factor
         d_start = self.warmup["distance"]["start_epoch"] / self.warmup["M"]
         d_end = self.warmup["distance"]["end_epoch"] / self.warmup["M"]
@@ -240,26 +237,11 @@ class VariationalAutoencoder(nn.Module):
 
         loss = reconstruction_loss - beta * KLD
 
-        # print("Reconstruction loss:", reconstruction_loss)
-        # print("Beta:", beta)
-        # print("KLD:", KLD)
-
-        # print("cross_reconstruction_loss:", cross_reconstruction_loss)
-        # print("cross_reconstruction_factor:", cross_reconstruction_factor)
-        # print("distance_factor:", distance_factor)
-        # print("distance:", distance)
-
-        # print("loss:", loss)
-
         if cross_reconstruction_loss > 0:
             loss += cross_reconstruction_factor * cross_reconstruction_loss
 
-        # print("loss after cross:", loss)
-
         if distance_factor > 0:
             loss += distance_factor * distance
-
-        # print("loss after distance:", loss)
 
         loss.backward()
 
@@ -275,7 +257,7 @@ class VariationalAutoencoder(nn.Module):
         # Load the data
         self.dataloader = data.DataLoader(
             self.dataset, batch_size=self.batch_size, shuffle=True, drop_last=True
-        )  # ,num_workers = 4)
+        ) 
         self.dataset.novelclasses = self.dataset.novelclasses.long().cuda()
         self.dataset.seenclasses = self.dataset.seenclasses.long().cuda()
 
@@ -375,11 +357,6 @@ class VariationalAutoencoder(nn.Module):
 
         # If in ZSL mode, set up the label numbers correctly for just unseen
         if self.generalized == False:
-            # there are only 50 classes in ZSL (for CUB)
-            # novel_corresponding_labels =list of all novel classes (as tensor)
-            # test_novel_label = mapped to 0-49 in classifier function
-            # those are used as targets, they have to be mapped to 0-49 right here:
-
             novel_corresponding_labels = self.map_label(
                 novel_corresponding_labels, novel_corresponding_labels
             )
@@ -389,11 +366,6 @@ class VariationalAutoencoder(nn.Module):
                 train_unseen_label = self.map_label(
                     train_unseen_label, cls_novelclasses
                 )
-
-            # for FSL, we train_seen contains the unseen class examples
-            # for ZSL, train seen label is not used
-            # if self.num_shots>0:
-            #    train_seen_label = self.map_label(train_seen_label,cls_novelclasses)
 
             test_novel_label = self.map_label(test_novel_label, cls_novelclasses)
 
@@ -553,45 +525,6 @@ class VariationalAutoencoder(nn.Module):
         print(test_novel_Y)
         print(test_seen_X.shape)
         print(test_seen_Y)
-
-        # from sklearn.manifold import TSNE
-        # import plotly.express as px
-
-        # # PLOT SEEN
-        # tsne = TSNE(n_components=2)
-        # tsne_results = tsne.fit_transform(test_seen_X.cpu())
-        # fig = px.scatter(
-        #     tsne_results,
-        #     x=0,
-        #     y=1,
-        #     color=test_seen_Y.cpu(),
-        #     labels={"0": "tsne-2d-one", "1": "tsne-2d-two"},
-        # )
-        # fig.show()
-
-        # # PLOT NOVEL
-        # tsne = TSNE(n_components=2)
-        # tsne_results = tsne.fit_transform(test_novel_X.cpu())
-        # fig = px.scatter(
-        #     tsne_results,
-        #     x=0,
-        #     y=1,
-        #     color=test_novel_Y.cpu(),
-        #     labels={"0": "tsne-2d-one", "1": "tsne-2d-two"},
-        # )
-        # fig.show()
-
-        # # PLOT TRAIN
-        # tsne = TSNE(n_components=2)
-        # tsne_results = tsne.fit_transform(train_X.cpu())
-        # fig = px.scatter(
-        #     tsne_results,
-        #     x=0,
-        #     y=1,
-        #     color=train_Y.cpu(),
-        #     labels={"0": "tsne-2d-one", "1": "tsne-2d-two"},
-        # )
-        # fig.show()
 
         ############################################################
         ##### initializing the classifier and train one epoch
