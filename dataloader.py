@@ -25,16 +25,10 @@ class DATA_LOADER(object):
         val_classes,
         device="cuda",
     ):
-
-        if dataset == "ESC-50":
-            data_path = "{}/{}.pickle".format(data_folder, fold)
-        elif dataset == "FSC22":
-            data_path = data_folder
-
         self.test_classes = test_classes
         self.val_classes = val_classes
 
-        self.data_path = data_path
+        self.data_path = data_folder
         self.batch_size = batch_size
         self.device = device
         self.fold = fold

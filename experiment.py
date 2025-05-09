@@ -40,11 +40,40 @@ if args.dataset == "ESC-50":
     elif args.fold == "fold34":
         args.val_classes = [47, 34, 20, 44, 25, 6, 7, 1, 28, 18]
     args.test_classes = [43, 5, 37, 12, 9, 0, 11, 8, 15, 16]
+
 elif args.dataset == "FSC22":
     args.val_classes = []
     args.test_classes = [5, 7, 15, 17, 21, 23, 26]
     if args.fold != "test":
         args.val_classes = [6, 8, 9, 12, 13, 18, 22]
+
+    elif args.dataset == "UrbanSound8k":
+        # args.train_classes = [0, 1, 2, 4, 5, 7, 8]
+        args.val_classes = [3, 6, 9]
+
+    elif args.dataset == "TAU2019":
+        # args.train_classes = [2, 3, 4, 5, 7, 8, 9]
+        args.val_classes = [0, 1, 6]
+
+    elif args.dataset == "GTZAN":
+        # args.train_classes = [0, 1, 2, 6, 7, 8, 9]
+        args.val_classes = [3, 4, 5]
+
+    elif args.dataset == "ARCA23K-FSD":
+        args.test_classes = ['Female_singing', 'Wind_chime', 'Dishes_and_pots_and_pans', 'Scratching_(performance_technique)', 'Crying_and_sobbing', 'Waves_and_surf', 'Screaming', 'Bark', 'Camera', 'Organ']
+        if args.split == "fold0":
+            args.val_classes = ['Crash_cymbal', 'Run', 'Zipper_(clothing)', 'Acoustic_guitar', 'Gong', 'Knock', 'Train', 'Crack', 'Cough', 'Cricket']
+        elif args.split == "fold1":
+            args.val_classes = ['Electric_guitar', 'Chewing_and_mastication', 'Keys_jangling', 'Female_speech_and_woman_speaking', 'Crumpling_and_crinkling', 'Skateboard', 'Computer_keyboard', 'Bass_guitar', 'Stream', 'Toilet_flush']
+        elif args.split == "fold2":
+           args.val_classes = ['Tap', 'Water_tap_and_faucet', 'Squeak', 'Snare_drum', 'Finger_snapping', 'Walk_and_footsteps', 'Meow', 'Rattle_(instrument)', 'Bowed_string_instrument', 'Sawing']
+        elif args.split == "fold3":
+            args.val_classes = ['Rattle', 'Slam', 'Whoosh_and_swoosh_and_swish', 'Hammer', 'Fart', 'Harp', 'Coin_(dropping)', 'Printer', 'Boom', 'Giggle']
+        elif args.split == "fold4":
+            args.val_classes = ['Clapping', 'Crushing', 'Livestock_and_farm_animals_and_working_animals', 'Scissors', 'Writing', 'Wind', 'Crackle', 'Tearing', 'Piano', 'Microwave_oven']
+        elif args.split == "fold5":
+            args.val_classes = ['Trumpet', 'Wind_instrument_and_woodwind_instrument', 'Child_speech_and_kid_speaking', 'Drill', 'Thump_and_thud', 'Drawer_open_or_close', 'Male_speech_and_man_speaking', 'Gunshot_and_gunfire', 'Burping_and_eructation', 'Splash_and_splatter']
+
 
 ########################################
 # The basic hyperparameters
