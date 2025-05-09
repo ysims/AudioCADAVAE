@@ -47,32 +47,35 @@ elif args.dataset == "FSC22":
     if args.fold != "test":
         args.val_classes = [6, 8, 9, 12, 13, 18, 22]
 
-    elif args.dataset == "UrbanSound8k":
-        # args.train_classes = [0, 1, 2, 4, 5, 7, 8]
-        args.val_classes = [3, 6, 9]
+elif args.dataset == "UrbanSound8k":
+    # args.train_classes = [0, 1, 2, 4, 5, 7, 8]
+    args.val_classes = [3, 6, 9]
+    args.test_classes = [3, 6, 9]
 
-    elif args.dataset == "TAU2019":
-        # args.train_classes = [2, 3, 4, 5, 7, 8, 9]
-        args.val_classes = [0, 1, 6]
+elif args.dataset == "TAU2019":
+    # args.train_classes = [2, 3, 4, 5, 7, 8, 9]
+    args.val_classes = [0, 1, 6]
+    args.test_classes = [0, 1, 6]
 
-    elif args.dataset == "GTZAN":
-        # args.train_classes = [0, 1, 2, 6, 7, 8, 9]
-        args.val_classes = [3, 4, 5]
+elif args.dataset == "GTZAN":
+    # args.train_classes = [0, 1, 2, 6, 7, 8, 9]
+    args.val_classes = [3, 4, 5]
+    args.test_classes = [3, 4, 5]
 
-    elif args.dataset == "ARCA23K-FSD":
-        args.test_classes = ['Female_singing', 'Wind_chime', 'Dishes_and_pots_and_pans', 'Scratching_(performance_technique)', 'Crying_and_sobbing', 'Waves_and_surf', 'Screaming', 'Bark', 'Camera', 'Organ']
-        if args.split == "fold0":
-            args.val_classes = ['Crash_cymbal', 'Run', 'Zipper_(clothing)', 'Acoustic_guitar', 'Gong', 'Knock', 'Train', 'Crack', 'Cough', 'Cricket']
-        elif args.split == "fold1":
-            args.val_classes = ['Electric_guitar', 'Chewing_and_mastication', 'Keys_jangling', 'Female_speech_and_woman_speaking', 'Crumpling_and_crinkling', 'Skateboard', 'Computer_keyboard', 'Bass_guitar', 'Stream', 'Toilet_flush']
-        elif args.split == "fold2":
-           args.val_classes = ['Tap', 'Water_tap_and_faucet', 'Squeak', 'Snare_drum', 'Finger_snapping', 'Walk_and_footsteps', 'Meow', 'Rattle_(instrument)', 'Bowed_string_instrument', 'Sawing']
-        elif args.split == "fold3":
-            args.val_classes = ['Rattle', 'Slam', 'Whoosh_and_swoosh_and_swish', 'Hammer', 'Fart', 'Harp', 'Coin_(dropping)', 'Printer', 'Boom', 'Giggle']
-        elif args.split == "fold4":
-            args.val_classes = ['Clapping', 'Crushing', 'Livestock_and_farm_animals_and_working_animals', 'Scissors', 'Writing', 'Wind', 'Crackle', 'Tearing', 'Piano', 'Microwave_oven']
-        elif args.split == "fold5":
-            args.val_classes = ['Trumpet', 'Wind_instrument_and_woodwind_instrument', 'Child_speech_and_kid_speaking', 'Drill', 'Thump_and_thud', 'Drawer_open_or_close', 'Male_speech_and_man_speaking', 'Gunshot_and_gunfire', 'Burping_and_eructation', 'Splash_and_splatter']
+elif args.dataset == "ARCA23K-FSD":
+    args.test_classes = ['Female_singing', 'Wind_chime', 'Dishes_and_pots_and_pans', 'Scratching_(performance_technique)', 'Crying_and_sobbing', 'Waves_and_surf', 'Screaming', 'Bark', 'Camera', 'Organ']
+    if args.split == "fold0":
+        args.val_classes = ['Crash_cymbal', 'Run', 'Zipper_(clothing)', 'Acoustic_guitar', 'Gong', 'Knock', 'Train', 'Crack', 'Cough', 'Cricket']
+    elif args.split == "fold1":
+        args.val_classes = ['Electric_guitar', 'Chewing_and_mastication', 'Keys_jangling', 'Female_speech_and_woman_speaking', 'Crumpling_and_crinkling', 'Skateboard', 'Computer_keyboard', 'Bass_guitar', 'Stream', 'Toilet_flush']
+    elif args.split == "fold2":
+        args.val_classes = ['Tap', 'Water_tap_and_faucet', 'Squeak', 'Snare_drum', 'Finger_snapping', 'Walk_and_footsteps', 'Meow', 'Rattle_(instrument)', 'Bowed_string_instrument', 'Sawing']
+    elif args.split == "fold3":
+        args.val_classes = ['Rattle', 'Slam', 'Whoosh_and_swoosh_and_swish', 'Hammer', 'Fart', 'Harp', 'Coin_(dropping)', 'Printer', 'Boom', 'Giggle']
+    elif args.split == "fold4":
+        args.val_classes = ['Clapping', 'Crushing', 'Livestock_and_farm_animals_and_working_animals', 'Scissors', 'Writing', 'Wind', 'Crackle', 'Tearing', 'Piano', 'Microwave_oven']
+    elif args.split == "fold5":
+        args.val_classes = ['Trumpet', 'Wind_instrument_and_woodwind_instrument', 'Child_speech_and_kid_speaking', 'Drill', 'Thump_and_thud', 'Drawer_open_or_close', 'Male_speech_and_man_speaking', 'Gunshot_and_gunfire', 'Burping_and_eructation', 'Splash_and_splatter']
 
 
 ########################################
@@ -106,7 +109,7 @@ hyperparameters = {
     "epochs": 80,
     "loss": "l1",
     "auxiliary_data_source": "word2vec",
-    "dataset": "ESC-50",
+    "dataset": args.dataset,
     "hidden_size_rule": {"audio": (1450, 665), "text": (1450, 665)},
     "latent_size": 64,
     "data_size": {"audio": 128, "text": 300},
@@ -121,6 +124,10 @@ hyperparameters = {
 cls_train_steps = [
     {"dataset": "ESC-50", "num_shots": 0, "generalized": False, "cls_train_steps": 23},
     {"dataset": "FSC22", "num_shots": 0, "generalized": False, "cls_train_steps": 20},
+    {"dataset": "UrbanSound8k", "num_shots": 0, "generalized": False, "cls_train_steps": 20},
+    {"dataset": "TAU2019", "num_shots": 0, "generalized": False, "cls_train_steps": 20},
+    {"dataset": "GTZAN", "num_shots": 0, "generalized": False, "cls_train_steps": 20},
+    {"dataset": "ARCA23K-FSD", "num_shots": 0, "generalized": False, "cls_train_steps": 50},
 ]
 
 ##################################
@@ -162,11 +169,17 @@ else:
         hyperparameters["samples_per_class"] = {
             "ESC-50": (0, 0, 100, 0),
             "FSC22": (0, 0, 100, 0),
+            "UrbanSound8k": (0, 0, 100, 0),
+            "TAU2019": (0, 0, 100, 0),
+            "GTZAN": (0, 0, 100, 0),
         }
     else:
         hyperparameters["samples_per_class"] = {
             "ESC-50": (0, 0, 100, 100),
             "FSC22": (0, 0, 100, 100),
+            "UrbanSound8k": (0, 0, 100, 100),
+            "TAU2019": (0, 0, 100, 100),
+            "GTZAN": (0, 0, 100, 100),
         }
 
 

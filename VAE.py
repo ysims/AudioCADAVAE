@@ -70,6 +70,16 @@ class VariationalAutoencoder(nn.Module):
         elif self.DATASET == "FSC22":
             self.num_classes = 27
             self.num_novel_classes = 7
+        elif self.DATASET == "UrbanSound8k":
+            self.num_classes = 10
+            self.num_novel_classes = 3
+        elif self.DATASET == "TAU2019":
+            self.num_classes = 10
+            self.num_novel_classes = 3
+        elif self.DATASET == "GTZAN":
+            self.num_classes = 10
+            self.num_novel_classes = 3
+
         else:
             print("Unsupported dataset")
 
