@@ -79,6 +79,10 @@ class VariationalAutoencoder(nn.Module):
         elif self.DATASET == "GTZAN":
             self.num_classes = 10
             self.num_novel_classes = 3
+        elif self.DATASET == "ARCA23K-FSD":
+            self.num_classes = 70
+            self.num_novel_classes = 10
+
 
         else:
             print("Unsupported dataset")
