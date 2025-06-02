@@ -150,7 +150,7 @@ class CLASSIFIER:
                     self.acc = acc
 
     def fit_zsl(self):
-        best_acc = 0
+        acc = 0
         mean_loss = 0
         for epoch in range(self.nepoch):
             for i in range(0, self.ntrain, self.batch_size):
@@ -171,7 +171,6 @@ class CLASSIFIER:
 
             self.current_epoch += 1
 
-            acc = 0
             if self.train_only == False:
                 with torch.no_grad():
                     acc = self.val(
@@ -180,12 +179,9 @@ class CLASSIFIER:
                         self.novelclasses,
                     )
 
-            if acc > best_acc:
-                best_acc = acc
-
             self.loss = loss
 
-        return best_acc
+        return acc
 
     def fit(self):
         best_H = -1
